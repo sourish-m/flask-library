@@ -1,0 +1,16 @@
+#header {
+  padding: 30px;
+  text-align: center;
+  background: #140005;
+  color: white;
+  font-size: 40px;
+}
+#footer {
+   position: fixed;
+   width: 100%;
+   background-color: #BBC4C2;
+   color: white;
+   text-align: center;
+   left: 0;
+   bottom:0;
+}

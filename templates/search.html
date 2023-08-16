@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" type="text/css" media="screen" charset="utf-8">
+        <title>Search Results</title>
+    </head>
+    <body>
+        <h1 id="header">Library Management System - Search</h1>
+        <div>
+            {{ txt }}
+        </div>
+        <div id = "footer">
+            <a href={{ url_for('homepage') }} target="_self">Back to Home</a>
+        </div>
+    </body>
+</html>
+
