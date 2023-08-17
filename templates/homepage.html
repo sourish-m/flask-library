@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" type="text/css" media="screen" charset="utf-8">
-        <title>Homepage</title>
-    </head>
-    <body>
-        <h1 id="header">Library Management System</h1>
-        <div>
+{% extends "base.html" %}
+{% block head %}Homepage{% endblock %}
+{% block body %}
+<div class="tabs">
+  <ul>
+    <li class="is-active"><a>Home</a></li>
+    <li><a href={{url_for('bookspage')}} target="_self">Books</a></li>
+    <li><a href={{url_for('memberspage')}} target="_self">Members</a></li>
+  </ul>
+</div>
+<div class="columns">
+    <div class="column is-1">
+        Search:
+    </div>
+    <div class="column">
+        <div class="control">
             <form action={{url_for('search')}} method="POST" accept-charset="utf-8">
-                Search:<br><input type="text" name="search">
+                <input class="input" name="searchbox" type="text" placeholder="Enter book/author to search">
             </form>
         </div>
-        <div id="footer">
-            <a href={{ url_for('aboutpage') }} target="_self">About Us</a>
-        </div>
-    </body>
-</html>
+    </div>
+</div>
+{% endblock %}

@@ -1,19 +1,55 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" type="text/css" media="screen" charset="utf-8">
-        <title>Search Results</title>
-    </head>
-    <body>
-        <h1 id="header">Library Management System - Search</h1>
-        <div>
-            {{ txt }}
-        </div>
-        <div id = "footer">
-            <a href={{ url_for('homepage') }} target="_self">Back to Home</a>
-        </div>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block head %}Search{% endblock %}
+{% block body %}
 
+<section>
+    <div class="column is-narrow">
+    <h1 class="title is-4">Search Results:</h1>
+    </div>
+</section>
+<section class="section">
+    <div class="table-container">
+        <table class="table is-striped is-narrow">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Average Rating</th>
+                    <th>ISBN</th>
+                    <th>ISBN13</th>
+                    <th>Language</th>
+                    <th>Total Pages</th>
+                    <th>No. of Ratings</th>
+                    <th>No. of text reviews</th>
+                    <th>Date Published</th>
+                    <th>Publisher</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in txt %}
+                <tr>
+                    <th>{{ book.bookID }}</th>
+                    <th>{{ book.title }}</th>
+                    <th>{{ book.authors }}</th>
+                    <th>{{ book.average_rating }}</th>
+                    <th>{{ book.isbn }}</th>
+                    <th>{{ book.isbn13 }}</th>
+                    <th>{{ book.language_cod }}</th>
+                    <th>{{ book.num_pages }}</th>
+                    <th>{{ book.ratings_count }}</th>
+                    <th>{{ book.text_reviews_count }}</th>
+                    <th>{{ book.publication_date }}</th>
+                    <th>{{ book.publisher }}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
+<section>
+    <a href={{ url_for('homepage') }} target="_self"><button class="button is-link">Back to Home</button></a>
+</section>
+{% endblock %}

@@ -1,16 +1,17 @@
-#header {
-  padding: 30px;
-  text-align: center;
-  background: #140005;
-  color: white;
-  font-size: 40px;
-}
-#footer {
-   position: fixed;
-   width: 100%;
-   background-color: #BBC4C2;
-   color: white;
-   text-align: center;
-   left: 0;
-   bottom:0;
-}
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+/* #header { */
+/*   padding: 30px; */
+/*   text-align: center; */
+/*   background: #140005; */
+/*   color: white; */
+/*   font-size: 40px; */
+/* } */
+/* #footer { */
+/*    position: fixed; */
+/*    width: 100%; */
+/*    background-color: #BBC4C2; */
+/*    color: white; */
+/*    text-align: center; */
+/*    left: 0; */
+/*    bottom:0; */
+/* } */
