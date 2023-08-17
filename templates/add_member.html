@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}Add Member{% endblock %}
+{% block body %}
+<section class="section">
+    <form action="{{ url_for('add_member') }}" method="POST">
+        <div class="field">
+            <label class="label">Member ID</label>
+            <div class="control">
+                <input class="input" type="text" name="member_id" placeholder="Enter Member ID" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Debt</label>
+            <div class="control">
+                <input class="input" type="text" name="debt" placeholder="Enter Debt" required>
+            </div>
+        </div>
+
+        <div class="column">
+            <button class="button is-primary" type="submit">Add Member</button>
+        </div>
+    </form>
+</section>
+
+<div class="column">
+    <a href={{ url_for('homepage') }} target="_self"><button class="button is-link">Back to Home</button></a>
+</div>
+{% endblock %}

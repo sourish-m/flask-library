@@ -1,4 +1,5 @@
 import requests
+import datetime
 from flask import Flask, render_template, request,\
         redirect, url_for, flash, abort
 from flask_sqlalchemy import SQLAlchemy
@@ -82,7 +83,7 @@ def fetch_api():
    flash("Import Successful")
    return redirect(url_for('homepage'))
 
-@app.route("/delete/<book_id>")
+@app.route("/delete/<book_id>", methods=['GET','POST'])
 def delete_book(book_id):
     book = Books.query.get(book_id)
     if book is None: 
@@ -137,7 +138,59 @@ def search():
 @app.route("/books")
 def bookspage():
     books = Books.query.order_by('bookID').all()
-    return render_template("books.html", books=books, length=len(books))
+    members=Members.query.order_by('member_id').all()
+    return render_template("books.html", books=books, length=len(books),members=members)
+
+@app.route("/update_book/<book_id>", methods=['GET', 'POST'])
+def update_book(book_id):
+    book = Books.query.get(book_id)
+
+    if not book:
+        abort(404, description="Book not found!")
+
+    if request.method == 'POST':
+        # Update the book details based on the form data
+        book.title = request.form.get('title')
+        book.author = request.form.get('author')
+        book.publication_date = request.form.get('publication_date')
+        book.publisher = request.form.get('publisher')
+
+        db.session.commit()
+
+        flash("Book updated successfully!")
+        return redirect(url_for('bookspage'))
+
+    return render_template('update_book.html', book=book)
+
+
+@app.route("/issue_book/<member_id>/<book_id>", methods=['POST'])
+def issue_book(member_id, book_id):
+    member = Members.query.get(member_id)
+    book = Books.query.get(book_id)
+
+    if not member or not book:
+        abort(404, description="Member or Book not found!")
+
+    if book.borrowed:
+        flash("Book is already borrowed!")
+    else:
+        # Update the book's borrowed status
+        book.borrowed = True
+
+        # Create a new transaction record
+        transaction = Transaction(
+            member_id=member_id,
+            transaction_type="Issue",
+            transaction_date=datetime.now(),
+            amount=0.0
+        )
+        db.session.add(transaction)
+        db.session.commit()
+
+        flash("Book issued successfully!")
+
+    return redirect(url_for('bookspage'))
+
 
 @app.route("/members")
 def memberspage():

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}Edit Member{% endblock %}
+{% block body %}
+
+<section class="section">
+    <form action="{{ url_for('edit_member', member_id=member.member_id) }}" method="POST">
+        <div class="field">
+            <label class="label">Member ID</label>
+            <div class="control">
+                <input class="input" type="text" name="member_id" value="{{ member.member_id }}" readonly>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Debt</label>
+            <div class="control">
+                <input class="input" type="text" name="debt" value="{{ member.debt }}" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" type="submit">Update Member</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+{% endblock %}

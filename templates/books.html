@@ -41,27 +41,61 @@
             <tbody>
                 {% for book in books %}
                 <tr>
-                    <th>{{ book.bookID }}</th>
-                    <th>{{ book.title }}</th>
-                    <th>{{ book.authors }}</th>
-                    <th>{{ book.average_rating }}</th>
-                    <th>{{ book.isbn }}</th>
-                    <th>{{ book.isbn13 }}</th>
-                    <th>{{ book.language_cod }}</th>
-                    <th>{{ book.num_pages }}</th>
-                    <th>{{ book.ratings_count }}</th>
-                    <th>{{ book.text_reviews_count }}</th>
-                    <th>{{ book.publication_date }}</th>
-                    <th>{{ book.publisher }}</th>
-                    <td >
-                        <button class="button" onclick="location.href = './delete/{{ book.bookID }}'" >
-                            Delete
-                        </button>  
+                    <td>{{ book.bookID }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.authors }}</td>
+                    <td>{{ book.average_rating }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.isbn13 }}</td>
+                    <td>{{ book.language_cod }}</td>
+                    <td>{{ book.num_pages }}</td>
+                    <td>{{ book.ratings_count }}</td>
+                    <td>{{ book.text_reviews_count }}</td>
+                    <td>{{ book.publication_date }}</td>
+                    <td>{{ book.publisher }}</td>
+                    <td>
+                        <div class="buttons is-centered">
+                            <!-- Delete button -->
+                            <form action="{{ url_for('delete_book', book_id=book.bookID) }}" method="POST">
+                                <button class="button is-danger is-small">
+                                    Delete
+                                </button>
+                            </form>
+                            <!-- Update button -->
+                            <form action="{{ url_for('update_book', book_id=book.bookID) }}" method="GET">
+                                <button class="button is-info is-small">
+                                    Update
+                                </button>
+                            </form>
+                            <!-- Issue button -->
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <div class="select">
+                                        <select name="member">
+                                            {% for member in members %}
+                                            <option value="{{ member.member_id }}">{{ member.member_id }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <form id="issue_form" action="" method="POST">
+                                <div class="control">
+                                    <button class="button is-primary is-small" onclick="updateFormAction()">
+                                        Issue
+                                    </button>
+                                </div>
+                            </form>
 
-                            <button class="button">
-                                Update
-                            </button>
-
+                            <script>
+                                function updateFormAction() {
+                                    var selectedMember = document.getElementById("member").value;
+                                    var form = document.getElementById("issue_form");
+                                    form.action = "./issue_book/${selectedMember}/{{ book.bookID }};
+                                    form.submit();
+                                }
+                            </script>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
