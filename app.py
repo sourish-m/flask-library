@@ -1,5 +1,6 @@
 import requests
-from flask import Flask, render_template, request, redirect, url_for, flash, abort
+from flask import Flask, render_template, request,\
+        redirect, url_for, flash, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 app = Flask(__name__) # This creates a WSGI object for flask
@@ -99,25 +100,27 @@ def addbook():
 
 @app.route("/change_db",methods=['GET','POST'])
 def change_db():
-    if request.method=="POST":
-           created_book = Books(
-               bookID = request.form.get('ID'),
-               title = request.form.get('title'),
-               authors = request.form.get('Authors'),
-               average_rating = request.form.get('Rating'),
-               isbn = request.form.get('isbn'),
-               isbn13 = request.form.get('isbn13'),
-               language_code= request.form.get('lc'),
-               num_pages = request.form.get('pages'),
-               ratings_count = request.form.get('rating'),
-               text_reviews_count = request.form.get('review'),
-               publication_date = request.form.get('pd'),
-               publisher = request.form.get('pub')
-               ) 
-           db.session.add(created_book)
-           db.session.commit()
-
-    return redirect(url_for('bookspage'))
+    if request.method == 'POST':
+       created_book = Books(
+           bookID=request.form.get('ID'),
+           title=request.form.get('title'),
+           authors=request.form.get('Authors'),
+           average_rating=request.form.get('Rating'),
+           isbn=request.form.get('isbn'),
+           isbn13=request.form.get('isbn13'),
+           language_code=request.form.get('lc'),
+           num_pages=int(request.form.get('pages')),
+           ratings_count=int(request.form.get('rating')),
+           text_reviews_count=int(request.form.get('review')),
+           publication_date=request.form.get('pd'),
+           publisher=request.form.get('pub')
+       ) 
+       db.session.add(created_book)
+       db.session.commit()
+       flash("Book added successfully!")
+       return redirect(url_for('bookspage'))
+   
+    return render_template("add_books.html")
 
 @app.route("/home")
 def homepage():
@@ -138,6 +141,7 @@ def bookspage():
 
 @app.route("/members")
 def memberspage():
+    members = Members.query.order_by('id').all()
     return "TODO"
 
 if __name__=="__main__":
