@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block head %}Books{% endblock %}
+{% block body %}
+<div class="columns">
+    <div class="column">
+        <div class="buttons">
+            <button class="button is-primary is-light" onclick="location.href= '{{ url_for('fetch_api') }}'" >
+                Import Books from Frappe API</button>
+        </div>
+    </div>
+
+    <div class="column">
+        <div class="buttons">
+            <button class="button is-primary is-light" onclick="location.href= '{{ url_for('addbook') }}'">
+                Add New Book</button>
+        </div>
+    </div>
+</div>
+
+{% if  length > 0 %}
+
+<section class="section">
+    <div class="table-container">
+        <table class="table is-striped is-narrow">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Average Rating</th>
+                    <th>ISBN</th>
+                    <th>ISBN13</th>
+                    <th>Language</th>
+                    <th>Total Pages</th>
+                    <th>No. of Ratings</th>
+                    <th>No. of text reviews</th>
+                    <th>Date Published</th>
+                    <th>Publisher</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <th>{{ book.bookID }}</th>
+                    <th>{{ book.title }}</th>
+                    <th>{{ book.authors }}</th>
+                    <th>{{ book.average_rating }}</th>
+                    <th>{{ book.isbn }}</th>
+                    <th>{{ book.isbn13 }}</th>
+                    <th>{{ book.language_cod }}</th>
+                    <th>{{ book.num_pages }}</th>
+                    <th>{{ book.ratings_count }}</th>
+                    <th>{{ book.text_reviews_count }}</th>
+                    <th>{{ book.publication_date }}</th>
+                    <th>{{ book.publisher }}</th>
+                    <td >
+                        <button class="button" onclick="location.href = './delete/{{ book.bookID }}'" >
+                            Delete
+                        </button>  
+
+                            <button class="button">
+                                Update
+                            </button>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% else %}
+<div >No book Available</div>
+{% endif %}
+<section>
+    <a href={{ url_for('homepage') }} target="_self"><button class="button is-link">Back to Home</button></a>
+</section>
+{% endblock %}

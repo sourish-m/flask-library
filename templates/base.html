@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" type="text/css" media="screen" charset="utf-8">
+        <title>
+            {% block head %}
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <section class="hero is-small is-primary">
+            <div class="hero-body">
+                <p class="title">
+                Library Management System
+                </p>
+            </div>
+        </section>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="notification">
+            <button class="delete"></button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block body %}
+        {%endblock %}
+
+        <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+    </body>
+</html>
+
+

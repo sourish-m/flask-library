@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block head %}Add Book{% endblock %}
+{% block body %}
+
+<section class="section">
+ <form method="POST" accept-charset="utf-8">
+<div class="field">
+  <label class="label">ID</label>
+  <div class="control">
+    <input class="input" type="text" name="ID" placeholder="Enter ID">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Title</label>
+  <div class="control">
+    <input class="input" type="text" name="title" placeholder="Enter Title">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Authors</label>
+  <div class="control">
+    <input class="input" type="text" name="Authors" placeholder="Enter Authors">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Average Rating</label>
+  <div class="control">
+    <input class="input" type="text" name="Rating" placeholder="Enter Average Rating">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">ISBN</label>
+  <div class="control">
+    <input class="input" type="text" name="isbn" placeholder="Enter ISBN">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">ISBN13</label>
+  <div class="control">
+    <input class="input" type="text" name="isbn13" placeholder="Enter ISBN13">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Language Code</label>
+  <div class="control">
+    <input class="input" type="text" name="lc" placeholder="Enter Language Code (eng/fr/..)">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Number of Pages</label>
+  <div class="control">
+    <input class="input" type="text" name="pages" placeholder="Enter Number of Pages">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">No. of Ratings</label>
+  <div class="control">
+    <input class="input" type="text" name="rating" placeholder="Enter No. of Ratings">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">No. of Text Reviews</label>
+  <div class="control">
+    <input class="input" type="text" name="review" placeholder="Enter No. of Text Reviews">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Publication Date</label>
+  <div class="control">
+    <input class="input" type="text" name="pd" placeholder="Enter Publication Date">
+  </div>
+</div>
+
+
+<div class="field">
+  <label class="label">Publisher</label>
+  <div class="control">
+    <input class="input" type="text" name="pub" placeholder="Enter Publisher">
+  </div>
+</div>
+ </form>
+</section>
+<section class="section">
+<div class="field is-grouped">
+  <div class="control">
+      <a href={{ url_for('change_db') }} target="_self"><button class="button is-link">Submit</button></a>
+  </div>
+  <div class="control">
+      <a href={{ url_for('bookspage') }} ><button class="button is-link">Cancel</button></a>
+  </div>
+</div>
+</section>
+{% endblock %}
