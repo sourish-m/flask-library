@@ -7,3 +7,9 @@ This is a Library management system webapp created with flask and sqlalchemy. Lo
 ![image](https://github.com/sourish-m/flask-library/assets/86039108/13d063c1-419b-484b-8e0c-41c957f6b296)
 
 ![image](https://github.com/sourish-m/flask-library/assets/86039108/1c51eaf4-83ab-451d-a3c5-a7918114374c)
+
+![image](https://github.com/sourish-m/flask-library/assets/86039108/d0f34fea-0bdc-4027-8fca-d374af875a4b)
+
+![image](https://github.com/sourish-m/flask-library/assets/86039108/7089a725-d954-41fb-b0b0-7a7e56e43508)
+
+
