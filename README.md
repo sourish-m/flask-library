@@ -1,6 +1,17 @@
 # Library Management System
 This is a Library management system webapp created with flask and sqlalchemy. Local sqlite database is used for storage.
 
+# How to Run
+cd to this directory. Then run the flask app using
+```bash
+flask run
+```
+Open the url provided in the browser.
+
+*To enable debug mode, run*
+```bash
+flask run --debug
+```
 # Screenshots
 ![image](https://github.com/sourish-m/flask-library/assets/86039108/db58461c-6e4e-43d2-b4c5-3e925f67a1ac)
 
