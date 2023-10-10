@@ -13,15 +13,18 @@ Open the url provided in the browser.
 flask run --debug
 ```
 # Screenshots
-![image](https://github.com/sourish-m/flask-library/assets/86039108/db58461c-6e4e-43d2-b4c5-3e925f67a1ac)
+![image](https://github.com/sourish-m/flask-library/assets/86039108/42a60b23-26db-4f0c-999a-b838f73a0f3a)
 
-![image](https://github.com/sourish-m/flask-library/assets/86039108/f66669d3-654b-4112-abea-0cbdf55d65e2)
+![image](https://github.com/sourish-m/flask-library/assets/86039108/8baf0fa1-80f3-480b-a7c8-0f9630cdc5ee)
+
+![image](https://github.com/sourish-m/flask-library/assets/86039108/3e9a7db9-4ee7-451b-a7d0-88fb4d6e1656)
+
+![image](https://github.com/sourish-m/flask-library/assets/86039108/f769db83-3b06-4af7-a885-4fd3df9b52cf)
+
+![image](https://github.com/sourish-m/flask-library/assets/86039108/a688ed2d-79e8-4654-a7cc-f63e9f9bd896)
 
 
-![image](https://github.com/sourish-m/flask-library/assets/86039108/1c51eaf4-83ab-451d-a3c5-a7918114374c)
 
-![image](https://github.com/sourish-m/flask-library/assets/86039108/d0f34fea-0bdc-4027-8fca-d374af875a4b)
 
-![image](https://github.com/sourish-m/flask-library/assets/86039108/7089a725-d954-41fb-b0b0-7a7e56e43508)
 
 
