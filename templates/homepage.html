@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 {% block head %}Homepage{% endblock %}
 {% block body %}
-<div class="tabs">
-  <ul>
-    <li class="is-active"><a>Home</a></li>
-    <li><a href={{url_for('bookspage')}} target="_self">Books</a></li>
-    <li><a href={{url_for('memberspage')}} target="_self">Members</a></li>
-  </ul>
-</div>
-<section class="section">
-<div class="columns">
-    <div class="column is-1">
-        Search:
+<nav class="navbar is-light">
+    <div class="navbar-start">
+            <a class="navbar-item is-active">Home</a>
+            <a class="navbar-item" href={{url_for('bookspage')}} target="_self">Books</a>
+            <a class="navbar-item" href={{url_for('memberspage')}} target="_self">Members</a>
     </div>
-    <div class="column">
-        <div class="control">
-            <form action={{url_for('search')}} method="POST" accept-charset="utf-8">
-                <input class="input" name="searchbox" type="text" placeholder="Enter book/author to search">
-            </form>
+</nav>
+<section class="section">
+    <div class="columns">
+        <div class="column is-1">
+            Search:
+        </div>
+        <div class="column">
+            <div class="control">
+                <form action={{url_for('search')}} method="POST" accept-charset="utf-8">
+                    <input class="input" name="searchbox" type="text" placeholder="Enter book/author to search">
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </section>
 {% endblock %}

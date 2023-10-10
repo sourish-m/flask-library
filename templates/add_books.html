@@ -3,7 +3,7 @@
 {% block body %}
 
 <section class="section">
-    <form method="POST" accept-charset="utf-8" action="{{ url_for('change_db') }}">
+    <form method="POST" accept-charset="utf-8" action="{{ url_for('addbook') }}">
         <div class="field">
             <label class="label">ID</label>
             <div class="control">
@@ -95,7 +95,7 @@
             <input type="submit" value="Submit" class="button is-link">
         </div>
         <div class="control">
-            <a href={{ url_for('bookspage') }} ><button class="button is-link">Cancel</button></a>
+            <a href={{ url_for('homepage') }} ><button class="button is-link">Cancel</button></a>
         </div>
     </div>
 </section>

@@ -65,11 +65,9 @@ def delete_book(book_id):
 
 @app.route("/add_books", methods=['GET', 'POST'])
 def addbook():
-    return render_template("add_books.html")
-
-
-@app.route("/change_db", methods=['GET', 'POST'])
-def change_db():
+    if request.method == 'GET':
+        return render_template("add_books.html")
+        
     if request.method == 'POST':
         created_book = Books(
             bookID=request.form.get('ID'),
@@ -88,9 +86,8 @@ def change_db():
         db.session.add(created_book)
         db.session.commit()
         flash("Book added successfully!")
-        return redirect(url_for('bookspage'))
+    return redirect(url_for('bookspage'))
 
-    return render_template("add_books.html")
 
 
 @app.route("/")
@@ -107,7 +104,7 @@ def search():
     return render_template("search.html", txt=books)
 
 
-@app.route("/books")
+@app.route("/books",methods=["GET","POST"])
 def bookspage():
     books = Books.query.order_by('bookID').all()
     members = Members.query.order_by('member_id').all()

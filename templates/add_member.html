@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block head %}Add Member{% endblock %}
 {% block body %}
+    <a href={{ url_for('memberspage') }} target="_self"><button class="button is-dark is-outlined is-rounded mt-1 ml-2">Back to Members</button></a>
 <section class="section">
     <form action="{{ url_for('add_member') }}" method="POST">
         <div class="field">
@@ -18,12 +19,9 @@
         </div>
 
         <div class="column">
-            <button class="button is-primary" type="submit">Add Member</button>
+            <button class="button is-primary is-rounded" type="submit">Add Member</button>
         </div>
     </form>
 </section>
 
-<div class="column">
-    <a href={{ url_for('homepage') }} target="_self"><button class="button is-link">Back to Home</button></a>
-</div>
 {% endblock %}

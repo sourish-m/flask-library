@@ -2,8 +2,18 @@
 {% block head %}Members{% endblock %}
 {% block body %}
 
-<section class="section">
-    <table class="table is-striped is-narrow">
+<nav class="level mt-1">
+    <div class="level-left">
+        <div class="level-item ml-2">
+            <a href="{{ url_for('add_member') }}" class="button is-dark is-outlined is-rounded">Add Member</a>
+        </div>
+        <div class="level-item">
+            <a href={{ url_for('homepage') }} target="_self"><button class="button is-dark is-outlined is-rounded">Back to Home</button></a>
+        </div>
+    </div>
+</nav>
+<section class="section table-container">
+    <table class="table is-bordered is-narrow">
         <thead>
             <tr>
                 <th>Member ID</th>
@@ -19,16 +29,16 @@
                 <td>{{ member.debt }}</td>
                 <td>
                     <div class="buttons is-centered"
-                    <!-- Edit button -->
-                    <a href="{{ url_for('edit_member', member_id=member.member_id) }}" class="button is-success is-small">
-                        Edit
-                    </a>
-                    <!-- Delete button -->
-                    <form action="{{ url_for('delete_member', member_id=member.member_id) }}" method="POST">
-                        <button class="button is-danger is-small">
-                           Delete
-                        </button>
-                    </form>
+                        <!-- Edit button -->
+                        <a href="{{ url_for('edit_member', member_id=member.member_id) }}" class="button is-small is-success is-rounded">
+                            Edit
+                        </a>
+                        <!-- Delete button -->
+                        <form action="{{ url_for('delete_member', member_id=member.member_id) }}" method="POST">
+                            <button class="button is-danger is-small is-rounded">
+                                Delete
+                            </button>
+                        </form>
                     </div>
                 </td>
             </tr>
@@ -36,10 +46,6 @@
         </tbody>
 
     </table>
-</section>
-<section class="section">
-    <a href="{{ url_for('add_member') }}" class="button is-primary">Add Member</a>
-    <a href={{ url_for('homepage') }} target="_self"><button class="button is-link">Back to Home</button></a>
 </section>
 
 {% endblock %}

@@ -1,27 +1,35 @@
 {% extends "base.html" %}
 {% block head %}Books{% endblock %}
 {% block body %}
-<div class="columns">
-    <div class="column is-3">
-        <div class="buttons">
-            <button class="button is-primary is-light" onclick="location.href= '{{ url_for('fetch_api') }}'" >
-                Import Books from Frappe API</button>
-        </div>
-    </div>
+<nav class="level mt-1">
+    <div class="level-left">
 
-    <div class="column">
-        <div class="buttons">
-            <button class="button is-primary is-light" onclick="location.href= '{{ url_for('addbook') }}'">
-                Add New Book</button>
+        <div class="level-item">
+            <div class="buttons">
+                <button class="button ml-2 is-outlined is-dark is-rounded" onclick="location.href= '{{ url_for('fetch_api') }}'" >
+                    Import from API</button>
+            </div>
         </div>
+
+        <div class="level-item">
+            <div class="buttons">
+                <button class="button is-outlined is-dark is-rounded" onclick="location.href= '{{ url_for('addbook') }}'">
+                    Add New Book</button>
+            </div>
+        </div>
+
+        <div class="level-item">
+            <a href={{ url_for('homepage') }} target="_self"><button class="button is-outlined is-dark is-rounded">Back to Home</button></a>
+        </div>
+
     </div>
-</div>
+</nav>
 
 {% if  length > 0 %}
 
 <section class="section">
     <div class="table-container">
-        <table class="table is-striped is-narrow">
+        <table class="table is-bordered is-narrow">
             <thead>
                 <tr>
                     <th>Book ID</th>
@@ -36,6 +44,7 @@
                     <th>No. of text reviews</th>
                     <th>Date Published</th>
                     <th>Publisher</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,38 +63,43 @@
                     <td>{{ book.publication_date }}</td>
                     <td>{{ book.publisher }}</td>
                     <td>
-                        <div class="buttons is-centered">
-                            <!-- Delete button -->
-                            <form action="{{ url_for('delete_book', book_id=book.bookID) }}" method="POST">
-                                <button class="button is-danger is-small">
-                                    Delete
-                                </button>
-                            </form>
-                            <!-- Update button -->
-                            <form action="{{ url_for('update_book', book_id=book.bookID) }}" method="GET">
-                                <button class="button is-info is-small">
-                                    Update
-                                </button>
-                            </form>
-                            <!-- Issue button -->
-                            <div class="field has-addons">
-                                <div class="control">
-                                    <div class="select">
-                                        <select name="member">
-                                            {% for member in members %}
-                                            <option value="{{ member.member_id }}">{{ member.member_id }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <form id="issue_form" action="" method="POST">
-                                <div class="control">
-                                    <button class="button is-primary is-small" onclick="updateFormAction()">
-                                        Issue
+                        <div class="level">
+                            <div class="level-left">
+                            <div class="level-item">
+                                <!-- Delete button -->
+                                <form action="{{ url_for('delete_book', book_id=book.bookID) }}" method="POST">
+                                    <button class="button is-danger is-small is-dark is-rounded">
+                                        Delete
                                     </button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+
+                            <div class="level-item">
+                                <!-- Update button -->
+                                <form action="{{ url_for('update_book', book_id=book.bookID) }}" method="GET">
+                                    <button class="button is-dark is-outlined is-small is-rounded">
+                                        Update
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="level-item">
+                                <!-- Issue button -->
+                                        <div class="select is-rounded is-dark ">
+                                            <select name="member">
+                                                {% for member in members %}
+                                                <option value="{{ member.member_id }}">{{ member.member_id }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                            </div>
+                            <div class="level-item">
+                                <form id="issue_form" action="" method="POST">
+                                        <button class="button is-dark is-outlined is-small is-rounded" onclick="updateFormAction()">
+                                            Issue
+                                        </button>
+                                </form>
+                            </div>
 
                             <script>
                                 function updateFormAction() {
@@ -95,6 +109,7 @@
                                     form.submit();
                                 }
                             </script>
+                        </div>
                         </div>
                     </td>
                 </tr>
@@ -108,6 +123,5 @@
 <div >No book Available</div>
 {% endif %}
 <section>
-    <a href={{ url_for('homepage') }} target="_self"><button class="button is-link">Back to Home</button></a>
 </section>
 {% endblock %}
