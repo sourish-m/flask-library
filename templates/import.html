@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block head %}Import Books from API{% endblock %}
+
+{% block body %}
+<section class="section">
+    <form method="POST" action="{{ url_for('fetch_api') }}">
+        <div class="field">
+            <label class="label" for="num_books">Number of Books to Import:</label>
+            <input class="input" type="number" name="num_books" id="num_books" min="1"><br>
+        </div>
+
+        <div class="field">
+            <label class="label" for="page">Page:</label>
+            <input class="input" type="text" name="page" id="page"><br>
+        </div>
+
+        <div class="field">
+            <label class="label" for="title">Title:</label>
+            <input class="input" type="text" name="title" id="title"><br>
+        </div>
+
+        <div class="field">
+            <label class="label" for="authors">Authors:</label>
+            <input class="input" type="text" name="authors" id="authors"><br>
+        </div>
+
+        <div class="field">
+            <label class="label" for="isbn">ISBN:</label>
+            <input class="input" type="text" name="isbn" id="isbn"><br>
+        </div>
+
+        <div class="field">
+            <label class="label" for="publisher">Publisher:</label>
+            <input class="input" type="text" name="publisher" id="publisher">
+        </div>
+
+        <div class="column">
+            <input class="button is-dark is-rounded is-outlined" type="submit" value="Import">
+        </div>
+    </form>
+</section>
+{% endblock %}
+

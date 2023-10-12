@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block head %}Transactions{% endblock %}
+{% block body %}
+<nav class="level mt-1">
+    <div class="level-left">
+        <div class="level-item">
+            <a href="{{ url_for('homepage') }}" target="_self">
+                <button class="button is-outlined is-dark is-rounded">Back to Home</button>
+            </a>
+        </div>
+    </div>
+</nav>
+
+{% if transactions %}
+<section class="section">
+    <div class="table-container">
+        <table class="table is-bordered is-narrow">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Member ID</th>
+                    <th>Transaction Type</th>
+                    <th>Transaction Date</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.transaction_id }}</td>
+                    <td>{{ transaction.member_id }}</td>
+                    <td>{{ transaction.transaction_type }}</td>
+                    <td>{{ transaction.transaction_date }}</td>
+                    <td>{{ transaction.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% else %}
+<section class="section">
+<div>No transactions available</div>
+</section>
+{% endif %}
+{% endblock %}
+

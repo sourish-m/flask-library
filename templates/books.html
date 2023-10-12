@@ -6,26 +6,30 @@
 
         <div class="level-item">
             <div class="buttons">
-                <button class="button ml-2 is-outlined is-dark is-rounded" onclick="location.href= '{{ url_for('fetch_api') }}'" >
+                <button class="button ml-2 is-outlined is-dark is-rounded" onclick="location.href='{{ url_for('fetch_api') }}'">
                     Import from API</button>
             </div>
         </div>
 
         <div class="level-item">
             <div class="buttons">
-                <button class="button is-outlined is-dark is-rounded" onclick="location.href= '{{ url_for('addbook') }}'">
+                <button class="button is-outlined is-dark is-rounded" onclick="location.href='{{ url_for('addbook') }}'">
                     Add New Book</button>
             </div>
         </div>
 
         <div class="level-item">
-            <a href={{ url_for('homepage') }} target="_self"><button class="button is-outlined is-dark is-rounded">Back to Home</button></a>
+            <a href="{{ url_for('homepage') }}" target="_self"><button class="button is-outlined is-dark is-rounded">Back to Home</button></a>
+        </div>
+
+        <div class="level-item">
+            <p>Total Books: {{ length }}</p>
         </div>
 
     </div>
 </nav>
 
-{% if  length > 0 %}
+{% if length > 0 %}
 
 <section class="section">
     <div class="table-container">
@@ -41,7 +45,7 @@
                     <th>Language</th>
                     <th>Total Pages</th>
                     <th>No. of Ratings</th>
-                    <th>No. of text reviews</th>
+                    <th>No. of Text Reviews</th>
                     <th>Date Published</th>
                     <th>Publisher</th>
                     <th>Actions</th>
@@ -65,51 +69,52 @@
                     <td>
                         <div class="level">
                             <div class="level-left">
-                            <div class="level-item">
-                                <!-- Delete button -->
-                                <form action="{{ url_for('delete_book', book_id=book.bookID) }}" method="POST">
-                                    <button class="button is-danger is-small is-dark is-rounded">
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
+                                <div class="level-item">
+                                    <!-- Delete button -->
+                                    <form action="{{ url_for('delete_book', book_id=book.bookID) }}" method="POST">
+                                        <button class="button is-danger is-small is-dark is-rounded">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
 
-                            <div class="level-item">
-                                <!-- Update button -->
-                                <form action="{{ url_for('update_book', book_id=book.bookID) }}" method="GET">
-                                    <button class="button is-dark is-outlined is-small is-rounded">
-                                        Update
-                                    </button>
-                                </form>
-                            </div>
+                                <div class="level-item">
+                                    <!-- Update button -->
+                                    <form action="{{ url_for('update_book', book_id=book.bookID) }}" method="GET">
+                                        <button class="button is-dark is-outlined is-small is-rounded">
+                                            Update
+                                        </button>
+                                    </form>
+                                </div>
 
-                            <div class="level-item">
-                                <!-- Issue button -->
-                                        <div class="select is-rounded is-dark ">
-                                            <select name="member">
-                                                {% for member in members %}
-                                                <option value="{{ member.member_id }}">{{ member.member_id }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                            </div>
-                            <div class="level-item">
-                                <form id="issue_form" action="" method="POST">
-                                        <button class="button is-dark is-outlined is-small is-rounded" onclick="updateFormAction()">
+                                <div class="level-item">
+                                    <!-- Issue button -->
+                                    <div class="select is-rounded is-dark">
+                                        <select id="member_{{ book.bookID }}">
+                                            {% for member in members %}
+                                            <option value="{{ member.member_id }}">{{ member.member_id }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <script>
+                                    function updateFormAction(bookID) {
+                                        var selectElement = document.getElementById("member_" + bookID);
+                                        var selectedMember = selectElement.value;
+                                        var form = document.getElementById("issue_form_" + bookID);
+                                        form.action = "./issue_book/" + selectedMember + "/" + bookID;
+                                        form.submit();
+                                    }
+                                </script>
+                                <div class="level-item">
+                                    <form id="issue_form_{{ book.bookID }}" action="" method="POST">
+                                        <button class="button is-dark is-outlined is-small is-rounded" onclick="updateFormAction('{{ book.bookID }}')">
                                             Issue
                                         </button>
-                                </form>
-                            </div>
+                                    </form>
+                                </div>
 
-                            <script>
-                                function updateFormAction() {
-                                    var selectedMember = document.getElementById("member").value;
-                                    var form = document.getElementById("issue_form");
-                                    form.action = "./issue_book/${selectedMember}/{{ book.bookID }};
-                                    form.submit();
-                                }
-                            </script>
-                        </div>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -120,8 +125,9 @@
 </section>
 
 {% else %}
-<div >No book Available</div>
+<div>No book Available</div>
 {% endif %}
 <section>
 </section>
 {% endblock %}
+

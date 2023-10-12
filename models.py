@@ -18,7 +18,7 @@ class Books(db.Model):
     text_reviews_count = db.Column(db.Integer)
     publication_date = db.Column(db.String(30))
     publisher = db.Column(db.String)
-    borrowed = db.Column(db.Boolean)
+    borrowed = db.Column(db.Boolean,default=False)
 
 class Transaction(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
