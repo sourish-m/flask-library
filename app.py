@@ -134,7 +134,8 @@ def search():
 def bookspage():
     books = Books.query.order_by('bookID').all()
     members = Members.query.order_by('member_id').all()
-    return render_template("books.html", books=books, length=len(books), members=members)
+    return render_template("books.html", 
+                           books=books, length=len(books), members=members)
 
 
 @app.route("/update_book/<book_id>", methods=['GET', 'POST'])
@@ -172,10 +173,11 @@ def issue_book(member_id, book_id):
     else:
         # Update the book's borrowed status
         book.borrowed = True
+        transaction_id = int(member_id + book_id + dt.now().strftime("%H%M%S"))
 
         # Create a new transaction record
         transaction = Transaction(
-            transaction_id=member_id+book_id,
+            transaction_id=transaction_id,
             member_id=member_id,
             transaction_type="Issue",
             transaction_date=dt.now(),
@@ -188,10 +190,55 @@ def issue_book(member_id, book_id):
 
     return redirect(url_for('bookspage'))
 
+@app.route("/issued_books/<member_id>")
+def issued_books(member_id):
+    member = Members.query.get(member_id)
+    if not member:
+        abort(404, description="Member not found!")
+
+    issued_books = Books.query.filter_by(borrowed=True).all()
+
+    return render_template("issued_books.html",
+                           member=member, issued_books=issued_books)
+
+@app.route("/return_book/<member_id>/<book_id>", methods=['POST'])
+def return_book(member_id, book_id):
+    member = Members.query.get(member_id)
+    book = Books.query.get(book_id)
+
+    if not member or not book:
+        abort(404, description="Member or Book not found!")
+
+    late_fee = float(request.form.get('late_fee'))
+
+    # Update the book's borrowed status and calculate the debt
+    book.borrowed = False
+    member.debt += late_fee
+    if member.debt > 500:
+        flash("Outstanding debt cannot exceed Rs. 500!")
+        return redirect(url_for('issued_books', member_id=member_id))
+    
+
+    # Create a new transaction record for the return
+    transaction = Transaction(
+        member_id=member_id,
+        transaction_type="Return",
+        transaction_date=dt.now(),
+        amount=late_fee
+    )
+
+    db.session.add(transaction)
+    db.session.commit()
+
+    flash("Book returned successfully!")
+
+    return redirect(url_for('issued_books', member_id=member_id))
+
+
 # Flask route for displaying all transactions
 @app.route("/transactions")
 def transactions_page():
-    transactions = Transaction.query.all()
+    transactions = Transaction.query.order_by(Transaction.transaction_date).all()
     return render_template("transactions.html", transactions=transactions)
 
 

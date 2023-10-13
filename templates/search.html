@@ -2,12 +2,10 @@
 {% block head %}Search{% endblock %}
 {% block body %}
 
-<section>
+<section class="section">
     <div class="column is-narrow">
         Search Results:
     </div>
-</section>
-<section class="section">
     <div class="table-container">
         <table class="table is-bordered is-narrow">
             <thead>
@@ -29,18 +27,18 @@
             <tbody>
                 {% for book in txt %}
                 <tr>
-                    <th>{{ book.bookID }}</th>
-                    <th>{{ book.title }}</th>
-                    <th>{{ book.authors }}</th>
-                    <th>{{ book.average_rating }}</th>
-                    <th>{{ book.isbn }}</th>
-                    <th>{{ book.isbn13 }}</th>
-                    <th>{{ book.language_cod }}</th>
-                    <th>{{ book.num_pages }}</th>
-                    <th>{{ book.ratings_count }}</th>
-                    <th>{{ book.text_reviews_count }}</th>
-                    <th>{{ book.publication_date }}</th>
-                    <th>{{ book.publisher }}</th>
+                    <td>{{ book.bookID }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.authors }}</td>
+                    <td>{{ book.average_rating }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.isbn13 }}</td>
+                    <td>{{ book.language_cod }}</td>
+                    <td>{{ book.num_pages }}</td>
+                    <td>{{ book.ratings_count }}</td>
+                    <td>{{ book.text_reviews_count }}</td>
+                    <td>{{ book.publication_date }}</td>
+                    <td>{{ book.publisher }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

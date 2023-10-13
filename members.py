@@ -59,3 +59,4 @@ def edit_member(member_id):
 
     return render_template("edit_member.html", member=member)
 
+
