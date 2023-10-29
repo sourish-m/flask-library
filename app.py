@@ -7,56 +7,57 @@ from datetime import datetime as dt
 app = Flask(__name__)  # This creates a WSGI object for flask
 from members import *
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///library.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True
-app.config['SECRET_KEY'] = 'sourishflaskdeveloper'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///library.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_ECHO"] = True
+app.config["SECRET_KEY"] = "sourishflaskdeveloper"
 
 db.init_app(app)
 with app.app_context():
     db.create_all()
 
-@app.route('/import', methods=['GET', 'POST'])
+
+@app.route("/import", methods=["GET", "POST"])
 def fetch_api():
-    if request.method == 'POST':
-        num_books = request.form.get('num_books')
+    if request.method == "POST":
+        num_books = request.form.get("num_books")
         if num_books:
             num_books = int(num_books)
         else:
             num_books = 0
-        page = request.form.get('page')
-        title = request.form.get('title')
-        authors = request.form.get('authors')
-        isbn = request.form.get('isbn')
-        publisher = request.form.get('publisher')
+        page = request.form.get("page")
+        title = request.form.get("title")
+        authors = request.form.get("authors")
+        isbn = request.form.get("isbn")
+        publisher = request.form.get("publisher")
 
         api_url = f"https://frappe.io/api/method/frappe-library?page={page}&title={title}&authors={authors}&isbn={isbn}&publisher={publisher}"
 
         response = requests.get(api_url)
-        books_data = response.json().get('message', [])
+        books_data = response.json().get("message", [])
 
         for i, book_data in enumerate(books_data):
             if num_books > 0 and i >= num_books:
                 break
 
             # Extract the required book details from the API response
-            book_id = book_data.get('bookID')
-            title = book_data.get('title')
-            authors = book_data.get('authors')
-            isbn = book_data.get('isbn')
-            publisher = book_data.get('publisher')
-            num_pages = book_data.get('num_pages')
+            book_id = book_data.get("bookID")
+            title = book_data.get("title")
+            authors = book_data.get("authors")
+            isbn = book_data.get("isbn")
+            publisher = book_data.get("publisher")
+            num_pages = book_data.get("num_pages")
             # Check if the book already exists in the database
             existing_book = Books.query.filter_by(bookID=book_id).first()
 
             if existing_book:
-            # Update the existing book record with the new information
+                # Update the existing book record with the new information
                 existing_book.title = title
                 existing_book.authors = authors
-                existing_book.isbn=isbn
-                existing_book.publisher=publisher
-                existing_book.num_pages=num_pages
-                
+                existing_book.isbn = isbn
+                existing_book.publisher = publisher
+                existing_book.num_pages = num_pages
+
                 db.session.commit()
             else:
                 # Create a new book record in your system
@@ -66,17 +67,18 @@ def fetch_api():
                     authors=authors,
                     isbn=isbn,
                     publisher=publisher,
-                    num_pages=num_pages
+                    num_pages=num_pages,
                 )
                 db.session.add(new_book)
                 db.session.commit()
 
         flash("Import Successful")
-        return redirect(url_for('homepage'))
+        return redirect(url_for("homepage"))
 
-    return render_template('import.html')
+    return render_template("import.html")
 
-@app.route("/delete/<book_id>", methods=['GET', 'POST'])
+
+@app.route("/delete/<book_id>", methods=["GET", "POST"])
 def delete_book(book_id):
     book = Books.query.get(book_id)
     if book is None:
@@ -86,34 +88,33 @@ def delete_book(book_id):
         db.session.commit()
     except Exception:
         db.session.rollback()
-    return redirect(url_for('bookspage'))
+    return redirect(url_for("bookspage"))
 
 
-@app.route("/add_books", methods=['GET', 'POST'])
+@app.route("/add_books", methods=["GET", "POST"])
 def addbook():
-    if request.method == 'GET':
+    if request.method == "GET":
         return render_template("add_books.html")
-        
-    if request.method == 'POST':
+
+    if request.method == "POST":
         created_book = Books(
-            bookID=request.form.get('ID'),
-            title=request.form.get('title'),
-            authors=request.form.get('Authors'),
-            average_rating=request.form.get('Rating'),
-            isbn=request.form.get('isbn'),
-            isbn13=request.form.get('isbn13'),
-            language_code=request.form.get('lc'),
-            num_pages=int(request.form.get('pages')),
-            ratings_count=int(request.form.get('rating')),
-            text_reviews_count=int(request.form.get('review')),
-            publication_date=request.form.get('pd'),
-            publisher=request.form.get('pub')
+            bookID=request.form.get("ID"),
+            title=request.form.get("title"),
+            authors=request.form.get("Authors"),
+            average_rating=request.form.get("Rating"),
+            isbn=request.form.get("isbn"),
+            isbn13=request.form.get("isbn13"),
+            language_code=request.form.get("lc"),
+            num_pages=int(request.form.get("pages")),
+            ratings_count=int(request.form.get("rating")),
+            text_reviews_count=int(request.form.get("review")),
+            publication_date=request.form.get("pd"),
+            publisher=request.form.get("pub"),
         )
         db.session.add(created_book)
         db.session.commit()
         flash("Book added successfully!")
-    return redirect(url_for('bookspage'))
-
+    return redirect(url_for("bookspage"))
 
 
 @app.route("/")
@@ -124,43 +125,48 @@ def homepage():
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == "POST":
-        search_input = request.form.get('searchbox')
-        books = Books.query.filter(or_(Books.title.ilike('%{}%'.format(search_input)), \
-                                       Books.authors.ilike('%{}%'.format(search_input)))).all()
+        search_input = request.form.get("searchbox")
+        books = Books.query.filter(
+            or_(
+                Books.title.ilike("%{}%".format(search_input)),
+                Books.authors.ilike("%{}%".format(search_input)),
+            )
+        ).all()
     return render_template("search.html", txt=books)
 
 
-@app.route("/books",methods=["GET","POST"])
+@app.route("/books", methods=["GET", "POST"])
 def bookspage():
-    books = Books.query.order_by('bookID').all()
-    members = Members.query.order_by('member_id').all()
-    return render_template("books.html", 
-                           books=books, length=len(books), members=members)
+    books = Books.query.order_by("bookID").all()
+    members = Members.query.order_by("member_id").all()
+    return render_template(
+        "books.html", books=books, length=len(books), members=members
+    )
 
 
-@app.route("/update_book/<book_id>", methods=['GET', 'POST'])
+@app.route("/update_book/<book_id>", methods=["GET", "POST"])
 def update_book(book_id):
     book = Books.query.get(book_id)
 
     if not book:
         abort(404, description="Book not found!")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         # Update the book details based on the form data
-        book.title = request.form.get('title')
-        book.author = request.form.get('author')
-        book.publication_date = request.form.get('publication_date')
-        book.publisher = request.form.get('publisher')
+        book.title = request.form.get("title")
+        book.author = request.form.get("author")
+        book.publication_date = request.form.get("publication_date")
+        book.publisher = request.form.get("publisher")
 
         db.session.commit()
 
         flash("Book updated successfully!")
-        return redirect(url_for('bookspage'))
+        return redirect(url_for("bookspage"))
 
-    return render_template('update_book.html', book=book)
+    return render_template("update_book.html", book=book)
 
 
-@app.route("/issue_book/<member_id>/<book_id>", methods=['GET','POST'])
+@app.route("/issue_book/<member_id>/<book_id>", methods=["GET", "POST"])
 def issue_book(member_id, book_id):
     member = Members.query.get(member_id)
     book = Books.query.get(book_id)
@@ -181,14 +187,15 @@ def issue_book(member_id, book_id):
             member_id=member_id,
             transaction_type="Issue",
             transaction_date=dt.now(),
-            amount=0.0
+            amount=0.0,
         )
         db.session.add(transaction)
         db.session.commit()
 
         flash("Book issued successfully!")
 
-    return redirect(url_for('bookspage'))
+    return redirect(url_for("bookspage"))
+
 
 @app.route("/issued_books/<member_id>")
 def issued_books(member_id):
@@ -198,10 +205,12 @@ def issued_books(member_id):
 
     issued_books = Books.query.filter_by(borrowed=True).all()
 
-    return render_template("issued_books.html",
-                           member=member, issued_books=issued_books)
+    return render_template(
+        "issued_books.html", member=member, issued_books=issued_books
+    )
 
-@app.route("/return_book/<member_id>/<book_id>", methods=['POST'])
+
+@app.route("/return_book/<member_id>/<book_id>", methods=["POST"])
 def return_book(member_id, book_id):
     member = Members.query.get(member_id)
     book = Books.query.get(book_id)
@@ -209,22 +218,21 @@ def return_book(member_id, book_id):
     if not member or not book:
         abort(404, description="Member or Book not found!")
 
-    late_fee = float(request.form.get('late_fee'))
+    late_fee = float(request.form.get("late_fee"))
 
     # Update the book's borrowed status and calculate the debt
     book.borrowed = False
     member.debt += late_fee
     if member.debt > 500:
         flash("Outstanding debt cannot exceed Rs. 500!")
-        return redirect(url_for('issued_books', member_id=member_id))
-    
+        return redirect(url_for("issued_books", member_id=member_id))
 
     # Create a new transaction record for the return
     transaction = Transaction(
         member_id=member_id,
         transaction_type="Return",
         transaction_date=dt.now(),
-        amount=late_fee
+        amount=late_fee,
     )
 
     db.session.add(transaction)
@@ -232,7 +240,7 @@ def return_book(member_id, book_id):
 
     flash("Book returned successfully!")
 
-    return redirect(url_for('issued_books', member_id=member_id))
+    return redirect(url_for("issued_books", member_id=member_id))
 
 
 # Flask route for displaying all transactions
