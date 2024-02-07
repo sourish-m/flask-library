@@ -1,5 +1,6 @@
 # Library Management System
-This is a Library management system webapp created with flask and sqlalchemy. Local sqlite database is used for storage.
+A Library management system webapp created with flask and sqlalchemy. UI is made using Bulma CSS Framework. Local sqlite database is used for storage.
+API provided by Frappe.io is used for fetching book details.
 
 # How to Run
 cd to this directory. Then run the flask app using
